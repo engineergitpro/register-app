@@ -8,7 +8,7 @@ pipeline{
 	        APP_NAME = "register-app-pipeline"
             RELEASE = "1.0.0"
             DOCKER_USER = "supriyajadhav24"
-            DOCKER_PASS = 'dockerhub'
+            DOCKER_PASS = 'Supriya@24'
             IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
             IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 	    JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
@@ -109,7 +109,7 @@ pipeline{
                 script {
                     // Login to Docker Hub using environment variables
                     sh """
-                    docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+                    echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin
                     docker pull ${IMAGE_NAME}:${IMAGE_TAG}
                     docker run -d --name ${APP_NAME}-container -p 8080:80 ${IMAGE_NAME}:${IMAGE_TAG}
                     """

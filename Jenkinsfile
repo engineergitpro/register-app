@@ -90,19 +90,19 @@ pipeline{
                 }
             }
        }
-    }
+    // }
 
-    post {
-       failure {
-             emailext body: '''${SCRIPT, template="groovy-html.template"}''', 
-                      subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Failed", 
-                      mimeType: 'text/html',to: "supriyajer94@gmail.com"
-      }
-      success {
-            emailext body: '''${SCRIPT, template="groovy-html.template"}''', 
-                     subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Successful", 
-                     mimeType: 'text/html',to: "supriyajer94@gmail.com"
-      } 
+    // post {
+    //    failure {
+    //          emailext body: '''${SCRIPT, template="groovy-html.template"}''', 
+    //                   subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Failed", 
+    //                   mimeType: 'text/html',to: "supriyajer94@gmail.com"
+    //   }
+    //   success {
+    //         emailext body: '''${SCRIPT, template="groovy-html.template"}''', 
+    //                  subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Successful", 
+    //                  mimeType: 'text/html',to: "supriyajer94@gmail.com"
+    //   } 
      
         stage('Docker Operations') {
             steps {

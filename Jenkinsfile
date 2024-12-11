@@ -102,6 +102,20 @@ pipeline{
             emailext body: '''${SCRIPT, template="groovy-html.template"}''', 
                      subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Successful", 
                      mimeType: 'text/html',to: "supriyajer94@gmail.com"
-      }      
+      } 
+     stages {
+        stage('Docker Operations') {
+            steps {
+                script {
+                    // Login to Docker Hub using environment variables
+                    sh """
+                    docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+                    docker pull ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker run -d --name ${APP_NAME}-container -p 8080:80 ${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+    }
    }
 }

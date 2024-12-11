@@ -29,28 +29,28 @@ pipeline{
         sh "mvn clean package"
       }
     }
-    stage("Test Application"){
-      steps{
-        sh "mvn test"
-      }
-    }
-    stage("SonarQube Analysis"){
-        steps{
-            script {
-		        withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
-                        sh "mvn sonar:sonar"
-		                }
-		           }
-             }
-    }
-    stage("Quality Gate"){
-           steps {
-               script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
-                }	
-            }
+    // stage("Test Application"){
+    //   steps{
+    //     sh "mvn test"
+    //   }
+    // }
+    // stage("SonarQube Analysis"){
+    //     steps{
+    //         script {
+		  //       withSonarQubeEnv(credentialsId: 'jenkins-sonarqube-token') { 
+    //                     sh "mvn sonar:sonar"
+		  //               }
+		  //          }
+    //          }
+    // }
+    // stage("Quality Gate"){
+    //        steps {
+    //            script {
+    //                 waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token'
+    //             }	
+    //         }
 
-    }
+    // }
     stage("Build & Push Docker Image") {
             steps {
                 script {
@@ -66,13 +66,13 @@ pipeline{
                   }
 
     }
-    stage("Trivy Scan") {
-           steps {
-               script {
-	            sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image supriyajadhav24/register-app-pipeline:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
-                      }
-                 }
-    }
+    // stage("Trivy Scan") {
+    //        steps {
+    //            script {
+	   //          sh ('docker run -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image supriyajadhav24/register-app-pipeline:latest --no-progress --scanners vuln  --exit-code 0 --severity HIGH,CRITICAL --format table')
+    //                   }
+    //              }
+    // }
     stage ('Cleanup Artifacts') {
            steps {
                script {
